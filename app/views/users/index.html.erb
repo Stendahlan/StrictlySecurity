@@ -1,7 +1,19 @@
-<h1>Users:</h1>
+<h1>User info</h1>
+<table>
+  <!--Header-->
+  <tr>
+    <td>User ID     |</td>
+    <td>Username     |</td>
+    <td>Password     |</td>
+  </tr>
 
-<%= @current_user.username %>
+  <!--Running through the info for all users-->
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= user.username %></td>
+      <td><%= user.password %></td>
 
-<% @users.each do |user| %>
-  <%= user.id %>
-<% end %>
+    </tr>
+  <% end %>
+</table>
