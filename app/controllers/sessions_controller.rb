@@ -1,30 +1,28 @@
 class SessionsController < ApplicationController
-  before_action :authenticate
+
   skip_before_action :authorized, only: [:new, :create, :welcome]
 
   def new
   end
 
   def login
-  end
-
-  def authenticate
-    authenticate_or_request_with_http_token do |token, options|
-      User.find_by(authorization_token: token)
-    end
+    #lookup user by username in db
+    #see if passwprds match
   end
 
   def create
 
-      if @user.authenticate()
-         sessions[:user_id] = @user.id
-         redirect_to '/welcome'
-      else
-         redirect_to '/login'
-      end
+    @user = User.find_by(username: params[:username])
+
+    if @user && @user.authenticate(params[:password])
+      #set new auth token first
+      #return a cookie to user's browser
+      #value of cookie is equal to users authorization token
+      redirect_to '/welcome'
+    else
+      redirect_to '/login'
+    end
   end
-
-
 
   def page_requires_login
   end
