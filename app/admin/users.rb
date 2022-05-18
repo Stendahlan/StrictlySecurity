@@ -14,5 +14,35 @@ ActiveAdmin.register User do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
-  
+
+  filter :username
+
+  show do
+    # renders app/views/admin/posts/_some_partial.html.erb
+    attributes_table do
+      row :id
+      row :username
+    end
+    active_admin_comments
+  end
+
+  index do
+    selectable_column
+    column :id do |thing|
+      link_to "#{thing.id}", admin_admin_users_url
+    end
+
+    column :username
+    column :created_at
+    column :updated_at
+  end
+
+  csv do
+    column :id
+    column :username
+    column :created_at
+    column :updated_at
+  end
+
+
 end
